@@ -100,41 +100,36 @@
             color: #000000;
             text-align: center;
         }
-      /* --- INDEX PAGE MOBILE RESPONSIVE FIXES --- */
+    /* --- CLEAN MOBILE INDEX PAGE STYLING --- */
 @media screen and (max-width: 768px) {
-    /* Force full-width container for index layout */
-    body, .container, .dashboard-container {
+    body {
+        margin: 0;
+        padding: 16px;
+        min-height: 100vh;
         display: flex;
-        flex-direction: column !important;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-attachment: fixed;
+        background-size: cover;
+    }
+
+    /* Make buttons full-width and touch-friendly */
+    a, button, .btn, .menu-btn {
         width: 100% !important;
-        padding: 12px !important;
-        margin: 0 !important;
+        max-width: 400px;
         box-sizing: border-box;
+        margin-bottom: 12px !important;
     }
 
-    /* Stack navigation cards or dashboard widgets vertically */
-    .nav-grid, .dashboard-cards, .stats-container {
-        display: flex !important;
-        flex-direction: column !important;
-        gap: 12px !important;
-        width: 100% !important;
+    /* Scale header elements */
+    img, svg {
+        max-width: 120px !important;
+        height: auto;
     }
 
-    /* Make individual navigation or stats cards take full width */
-    .card, .nav-card, .stat-card {
-        width: 100% !important;
-        margin-bottom: 10px !important;
-        box-sizing: border-box;
-    }
-
-    /* Scale down oversized landing headings so they do not wrap awkwardly */
-    h1 {
-        font-size: 24px !important;
-        text-align: center;
-    }
-    
-    p {
-        font-size: 14px !important;
+    h1, .title {
+        font-size: 22px !important;
         text-align: center;
     }
 }
