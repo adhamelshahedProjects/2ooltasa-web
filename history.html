@@ -26,6 +26,48 @@
         .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); justify-content: center; align-items: center; z-index: 1000; }
         .modal-content { background: #F2EBDB; padding: 20px; border-radius: 8px; width: 600px; max-height: 90vh; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); overflow-y: auto; }
         .modal-title { font-size: 18px; font-family: serif; font-weight: bold; color: #CC5500; margin: 0; }
+        /* --- MOBILE RESPONSIVE STYLES --- */
+@media screen and (max-width: 768px) {
+    body {
+        height: auto;
+        padding: 10px;
+    }
+
+    /* Turn side-by-side layouts into vertical stacks */
+    .main-content {
+        flex-direction: column !important;
+        overflow: visible !important;
+    }
+
+    /* Make forms take full width on mobile */
+    .form-pane {
+        width: 100% !important;
+        min-width: 100% !important;
+        box-sizing: border-box;
+    }
+
+    /* Make tables scrollable horizontally without breaking the page */
+    .table-pane {
+        width: 100% !important;
+        overflow-x: auto;
+    }
+
+    table {
+        min-width: 500px; /* Forces table to keep its structure and allow horizontal swiping */
+    }
+
+    /* Adjust filters and top bars for small screens */
+    .filters-bar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .filters-bar input, 
+    .filters-bar select, 
+    .filters-bar button {
+        width: 100% !important;
+    }
+}
     </style>
 </head>
 <body>
