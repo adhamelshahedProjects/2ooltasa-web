@@ -295,6 +295,42 @@
         width: 100% !important;
     }
 }
+		/* --- MOBILE MODAL OPTIMIZATIONS --- */
+@media screen and (max-width: 768px) {
+    /* Convert popup modals into full-screen mobile views */
+    .modal, .modal-content, .popup-overlay, .catering-modal {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100vw !important;
+        height: 100vh !important;
+        max-width: 100% !important;
+        max-height: 100% !important;
+        border-radius: 0 !important;
+        margin: 0 !important;
+        padding: 16px !important;
+        box-sizing: border-box;
+        overflow-y: auto !important;
+    }
+
+    /* Stack order item lists vertically inside the modal */
+    .modal-items-list, .cart-summary-container {
+        display: flex;
+        flex-direction: column;
+        width: 100% !important;
+    }
+
+    /* Make touch targets larger for fingers instead of mouse clicks */
+    button, .btn, input[type="button"], input[type="submit"] {
+        min-height: 44px;
+        font-size: 16px !important;
+    }
+
+    /* Make quantity adjustment buttons easy to tap on mobile */
+    .qty-btn, .item-action-btn {
+        padding: 10px 14px !important;
+    }
+}
     </style>
 </head>
 <body>
