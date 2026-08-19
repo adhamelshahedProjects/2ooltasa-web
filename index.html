@@ -100,46 +100,42 @@
             color: #000000;
             text-align: center;
         }
-        /* --- MOBILE RESPONSIVE STYLES --- */
+      /* --- INDEX PAGE MOBILE RESPONSIVE FIXES --- */
 @media screen and (max-width: 768px) {
-    body {
-        height: auto;
-        padding: 10px;
-    }
-
-    /* Turn side-by-side layouts into vertical stacks */
-    .main-content {
+    /* Force full-width container for index layout */
+    body, .container, .dashboard-container {
+        display: flex;
         flex-direction: column !important;
-        overflow: visible !important;
-    }
-
-    /* Make forms take full width on mobile */
-    .form-pane {
         width: 100% !important;
-        min-width: 100% !important;
+        padding: 12px !important;
+        margin: 0 !important;
         box-sizing: border-box;
     }
 
-    /* Make tables scrollable horizontally without breaking the page */
-    .table-pane {
+    /* Stack navigation cards or dashboard widgets vertically */
+    .nav-grid, .dashboard-cards, .stats-container {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 12px !important;
         width: 100% !important;
-        overflow-x: auto;
     }
 
-    table {
-        min-width: 500px; /* Forces table to keep its structure and allow horizontal swiping */
-    }
-
-    /* Adjust filters and top bars for small screens */
-    .filters-bar {
-        flex-direction: column;
-        align-items: stretch;
-    }
-
-    .filters-bar input, 
-    .filters-bar select, 
-    .filters-bar button {
+    /* Make individual navigation or stats cards take full width */
+    .card, .nav-card, .stat-card {
         width: 100% !important;
+        margin-bottom: 10px !important;
+        box-sizing: border-box;
+    }
+
+    /* Scale down oversized landing headings so they do not wrap awkwardly */
+    h1 {
+        font-size: 24px !important;
+        text-align: center;
+    }
+    
+    p {
+        font-size: 14px !important;
+        text-align: center;
     }
 }
     </style>
