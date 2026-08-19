@@ -100,6 +100,48 @@
             color: #000000;
             text-align: center;
         }
+        /* --- MOBILE RESPONSIVE STYLES --- */
+@media screen and (max-width: 768px) {
+    body {
+        height: auto;
+        padding: 10px;
+    }
+
+    /* Turn side-by-side layouts into vertical stacks */
+    .main-content {
+        flex-direction: column !important;
+        overflow: visible !important;
+    }
+
+    /* Make forms take full width on mobile */
+    .form-pane {
+        width: 100% !important;
+        min-width: 100% !important;
+        box-sizing: border-box;
+    }
+
+    /* Make tables scrollable horizontally without breaking the page */
+    .table-pane {
+        width: 100% !important;
+        overflow-x: auto;
+    }
+
+    table {
+        min-width: 500px; /* Forces table to keep its structure and allow horizontal swiping */
+    }
+
+    /* Adjust filters and top bars for small screens */
+    .filters-bar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .filters-bar input, 
+    .filters-bar select, 
+    .filters-bar button {
+        width: 100% !important;
+    }
+}
     </style>
 </head>
 <body>
