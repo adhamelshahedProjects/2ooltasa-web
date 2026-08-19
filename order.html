@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Order - 2oolTasa</title>
+    <style>
+        body {
+            margin: 0;
+            background-color: #F2EBDB;
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            box-sizing: border-box;
+        }
+
+        .top-bar {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 15px;
+        }
+
+        .btn-green {
+            background-color: #829B47;
+            color: white;
+            font-weight: bold;
+            border-radius: 6px;
+            padding: 6px 15px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .header-title {
+            font-size: 26px;
+            font-family: serif;
+            font-weight: bold;
+            color: #CC5500;
+            margin: 0;
+        }
+
+        .separator {
+            border: 0;
+            height: 1px;
+            background-color: #dcdcdc;
+            margin-bottom: 15px;
+        }
+
+        .main-content {
+            display: flex;
+            gap: 20px;
+            flex-grow: 1;
+            overflow: hidden;
+        }
+
+        .left-pane, .right-pane {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            flex: 1;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+        .section-title {
+            font-family: serif;
+            font-weight: bold;
+            font-size: 16px;
+            color: #CC5500;
+            margin: 0;
+        }
+
+        .search-field, .input-field, .dropdown {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .search-field, .input-field {
+            width: 100%;
+        }
+
+        .list-box {
+            height: 150px;
+            min-height: 150px;
+            background: white;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            overflow-y: auto;
+        }
+
+        .active-customer {
+            color: #b33939;
+            font-weight: bold;
+            margin: 0;
+        }
+
+        .new-customer-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 10px;
+        }
+
+        .action-box {
+            grid-column: span 3;
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-blue {
+            background-color: #3498db;
+            color: white;
+            font-weight: bold;
+            border: none;
+            padding: 6px 15px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .btn-red {
+            background-color: #e74c3c;
+            color: white;
+            font-weight: bold;
+            border: none;
+            padding: 6px 15px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .menu-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .menu-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            padding-bottom: 20px;
+        }
+
+        .meal-card {
+            background-color: #FFFFFF;
+            border-radius: 12px;
+            padding: 15px;
+            width: 180px;
+            min-height: 220px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0px 5px 10px rgba(0,0,0,0.05);
+            box-sizing: border-box;
+        }
+
+        .meal-img {
+            width: 130px;
+            height: 130px;
+            object-fit: cover;
+            margin-bottom: 10px;
+        }
+
+        .meal-name {
+            font-family: serif;
+            font-weight: bold;
+            font-size: 16px;
+            color: #333333;
+            margin: 0 0 5px 0;
+            text-align: center;
+        }
+
+        .meal-price {
+            color: #829B47;
+            font-weight: bold;
+            font-size: 14px;
+            margin: 0 0 10px 0;
+        }
+
+        .btn-orange {
+            background-color: #CC5500;
+            color: white;
+            font-weight: bold;
+            border-radius: 6px;
+            padding: 8px;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .cart-list {
+            height: 280px;
+            background: white;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            overflow-y: auto;
+            padding: 10px;
+        }
+
+        .checkout-row {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .checkout-label {
+            font-weight: bold;
+        }
+
+        .total-label {
+            font-size: 18px;
+            font-weight: bold;
+            color: #CC5500;
+            text-align: right;
+            margin: 10px 0;
+        }
+
+        .btn-submit {
+            background-color: #829B47;
+            color: white;
+            font-weight: bold;
+            font-size: 15px;
+            border-radius: 8px;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            width: 200px;
+            align-self: flex-end;
+            height: 45px;
+        }
+
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            justify-content: center; align-items: center;
+            z-index: 1000;
+        }
+        .modal-content {
+            background: #F2EBDB;
+            padding: 20px;
+            border-radius: 8px;
+            width: 600px;
+            max-height: 85vh;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-bar">
+        <button class="btn-green" onclick="window.location.href='index.html'">Back to Dashboard</button>
+        <h1 class="header-title">New Order</h1>
+    </div>
+
+    <hr class="separator">
+
+    <div class="main-content">
+        <div class="left-pane">
+            <h2 class="section-title">1. Select Customer</h2>
+            <input type="text" class="search-field" id="customer-search" placeholder="Search by name, username, or phone...">
+
+            <div class="list-box" id="customer-list"></div>
+
+            <p class="active-customer">Selected Customer: None</p>
+
+            <div class="new-customer-grid">
+                <input type="text" class="input-field" placeholder="Name">
+                <input type="text" class="input-field" placeholder="Username">
+                <input type="text" class="input-field" placeholder="Phone">
+                <div class="action-box">
+                    <button class="btn-green" id="add-cust-btn">Add New</button>
+                    <button class="btn-blue" id="update-cust-btn">Update Selected</button>
+                    <button class="btn-red" id="clear-cust-btn">Clear Fields</button>
+                </div>
+            </div>
+
+            <hr class="separator">
+
+            <div class="menu-header">
+                <h2 class="section-title">2. Add Meals to Cart</h2>
+                <button class="btn-green" onclick="openCateringModal()">+ Custom Catering Meal</button>
+            </div>
+
+            <div class="menu-grid" id="menu-grid"></div>
+        </div>
+
+        <div class="right-pane">
+            <h2 class="section-title">3. Current Order Summary</h2>
+
+            <div class="cart-list" id="cart-list"></div>
+
+            <div class="checkout-row">
+                <span class="checkout-label">Discount (%):</span>
+                <input type="number" class="input-field" id="discount-input" style="width: 80px;" value="0">
+            </div>
+
+            <div class="checkout-row">
+                <span class="checkout-label">Type:</span>
+                <select class="dropdown" id="delivery-type">
+                    <option value="Dine in">Dine in</option>
+                    <option value="Pickup">Pickup</option>
+                    <option value="Catering">Catering</option>
+                    <option value="Delivery">Delivery</option>
+                </select>
+                <select class="dropdown" id="delivery-provider" style="display: none;">
+                    <option value="Uber">Uber</option>
+                    <option value="Talabat">Talabat</option>
+                    <option value="Self">Self</option>
+                </select>
+            </div>
+
+            <div class="checkout-row">
+                <span class="checkout-label">Payment:</span>
+                <select class="dropdown" id="payment-method">
+                    <option value="Cash">Cash</option>
+                    <option value="Instapay">Instapay</option>
+                    <option value="Telda">Telda</option>
+                </select>
+            </div>
+
+            <p class="total-label">Total: 0.00 EGP</p>
+            <button class="btn-submit">Submit Order</button>
+        </div>
+    </div>
+
+    <!-- CUSTOM CATERING MODAL -->
+    <div id="catering-modal" class="modal-overlay">
+        <div class="modal-content">
+            <h2 class="section-title" style="margin: 0; font-size: 20px;">Define Custom Catering Menu Item</h2>
+            
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <span style="font-weight: bold;">Template:</span>
+                <select id="catering-template" class="dropdown" style="flex-grow: 1;" onchange="loadCateringTemplate()">
+                    <option value="">Select a base meal to edit...</option>
+                </select>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 10px;">
+                <div>
+                    <label style="font-size: 12px; font-weight: bold;">Name:</label>
+                    <input type="text" id="cat-name" class="input-field" placeholder="Meal Name">
+                </div>
+                <div>
+                    <label style="font-size: 12px; font-weight: bold;">Unit Price (EGP):</label>
+                    <input type="number" id="cat-price" class="input-field" placeholder="Price">
+                </div>
+                <div>
+                    <label style="font-size: 12px; font-weight: bold;">Profit %:</label>
+                    <input type="number" id="cat-profit" class="input-field" value="0">
+                </div>
+            </div>
+
+            <hr class="separator" style="margin: 5px 0;">
+            <p style="margin: 0; font-weight: bold; font-size: 14px;">Build Recipe (For Stock Deduction):</p>
+            
+            <div style="display: flex; gap: 8px; align-items: center;">
+                <select id="cat-stock-combo" class="dropdown" style="flex: 2;" onchange="updateUnitSelection()">
+                    <option value="">Select Ingredient...</option>
+                </select>
+                <input type="number" id="cat-amount" class="input-field" placeholder="Amount" style="flex: 1;">
+                <select id="cat-unit-combo" class="dropdown" style="flex: 1;" disabled>
+                    <option value="">Unit</option>
+                </select>
+            </div>
+
+            <div style="display: flex; gap: 6px;">
+                <button class="btn-green" style="flex: 1; padding: 6px;" onclick="addIngredientToRecipe()">Add</button>
+                <button class="btn-green" style="flex: 1; padding: 6px; background-color: #2980b9;" onclick="updateIngredientInRecipe()">Update Selected</button>
+                <button class="btn-red" style="flex: 1; padding: 6px;" onclick="removeSelectedRecipeIngredient()">Remove</button>
+            </div>
+
+            <div style="background: white; border: 1px solid #ccc; border-radius: 4px; height: 130px; overflow-y: auto;">
+                <table style="width: 100%; border-collapse: collapse; font-size: 13px;" id="recipe-table">
+                    <thead>
+                        <tr style="background: #f7f3e8; border-bottom: 1px solid #ccc; text-align: left;">
+                            <th style="padding: 6px;">Ingredient</th>
+                            <th style="padding: 6px;">Amount</th>
+                            <th style="padding: 6px;">Unit</th>
+                            <th style="padding: 6px; text-align: right;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="recipe-tbody"></tbody>
+                </table>
+            </div>
+
+            <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 5px;">
+                <button class="btn-red" onclick="closeCateringModal()">Cancel</button>
+                <button class="btn-green" onclick="saveCustomCateringMeal()">Create Meal & Add to Cart</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SIDE SELECTION MODAL -->
+    <div id="side-modal" class="modal-overlay">
+        <div class="modal-content" style="width: 320px; align-items: center;">
+            <h3 id="side-modal-title" style="color: #CC5500; font-family: serif; margin-top: 0;">Choose a side:</h3>
+            <select id="side-combo" class="dropdown" style="width: 100%;"></select>
+            <div style="display: flex; gap: 10px; width: 100%; margin-top: 15px;">
+                <button class="btn-red" style="flex: 1;" onclick="closeSideModal()">Cancel</button>
+                <button class="btn-green" style="flex: 1;" onclick="confirmSideSelection()">Confirm & Add</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const BASE_URL = 'https://ominous-parakeet-77p9vw547xwp2xx5w-8081.app.github.dev/';
+
+        let allMeals = [];
+        let allStockItems = [];
+        let allCustomers = [];
+        let cart = [];
+        let selectedCustomerData = null;
+        let activeMealForSide = null;
+        let recipeIngredients = [];
+        let selectedRecipeIndex = -1;
+
+        const deliveryType = document.getElementById('delivery-type');
+        const deliveryProvider = document.getElementById('delivery-provider');
+        deliveryType.addEventListener('change', function() {
+            if (this.value === 'Delivery') {
+                deliveryProvider.style.display = 'inline-block';
+            } else {
+                deliveryProvider.style.display = 'none';
+            }
+        });
+
+        async function loadInitialData() {
+            try {
+                const [custRes, mealRes, stockRes] = await Promise.all([
+                    fetch(BASE_URL + '/customers'),
+                    fetch(BASE_URL + '/meals'),
+                    fetch(BASE_URL + '/stock')
+                ]);
+                allCustomers = await custRes.json();
+                allMeals = await mealRes.json();
+                allStockItems = await stockRes.json();
+
+                renderCustomerList(allCustomers);
+                renderMenuGrid();
+                populateCateringDropdowns();
+            } catch (error) {
+                console.error("Initialization failed:", error);
+            }
+        }
+
+        function renderCustomerList(customers) {
+            const customerList = document.getElementById('customer-list');
+            customerList.innerHTML = ''; 
+            customers.forEach(customer => {
+                const div = document.createElement('div');
+                div.style.padding = '10px';
+                div.style.borderBottom = '1px solid #eee';
+                div.style.cursor = 'pointer';
+                const usernameDisplay = customer.username ? ` [@${customer.username}]` : "";
+                div.innerText = `${customer.name}${usernameDisplay} - ${customer.phone}`;
+                div.onclick = () => selectCustomer(customer);
+                customerList.appendChild(div);
+            });
+        }
+
+        function selectCustomer(customer) {
+            selectedCustomerData = customer;
+            const usernameDisplay = customer.username ? ` [@${customer.username}]` : "";
+            const activeLabel = document.querySelector('.active-customer');
+            activeLabel.innerText = `Selected: ${customer.name}${usernameDisplay} - ${customer.phone}`;
+            activeLabel.style.color = '#829B47'; 
+
+            const inputs = document.querySelectorAll('.new-customer-grid .input-field');
+            inputs[0].value = customer.name;
+            inputs[1].value = customer.username || '';
+            inputs[2].value = customer.phone;
+        }
+
+        document.getElementById('customer-search').addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase().trim();
+            if (!query) {
+                renderCustomerList(allCustomers);
+                return;
+            }
+            const filtered = allCustomers.filter(c => 
+                c.name.toLowerCase().includes(query) || 
+                (c.username && c.username.toLowerCase().includes(query)) || 
+                c.phone.includes(query)
+            );
+            renderCustomerList(filtered);
+        });
+	// Customer Action Buttons
+        document.getElementById('clear-cust-btn').addEventListener('click', () => {
+            selectedCustomerData = null;
+            document.querySelector('.active-customer').innerText = "Selected Customer: None";
+            document.querySelector('.active-customer').style.color = '#b33939';
+            
+            const inputs = document.querySelectorAll('.new-customer-grid .input-field');
+            inputs[0].value = '';
+            inputs[1].value = '';
+            inputs[2].value = '';
+            
+            // Remove highlight from list
+            renderCustomerList(allCustomers);
+        });
+
+        document.getElementById('add-cust-btn').addEventListener('click', async () => {
+            const inputs = document.querySelectorAll('.new-customer-grid .input-field');
+            const name = inputs[0].value.trim();
+            const username = inputs[1].value.trim();
+            const phone = inputs[2].value.trim();
+
+            if (!name || !phone) {
+                alert("Name and Phone are required to add a customer.");
+                return;
+            }
+
+            const newCustomer = { id: 0, name, username, phone };
+
+            try {
+                const response = await fetch(BASE_URL + '/customers', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(newCustomer)
+                });
+
+                if (response.ok) {
+                    const savedCustomer = await response.json();
+                    allCustomers.push(savedCustomer);
+                    renderCustomerList(allCustomers);
+                    selectCustomer(savedCustomer);
+                    alert("Customer added successfully!");
+                } else {
+                    alert("Failed to add customer.");
+                }
+            } catch (error) {
+                console.error("Error adding customer:", error);
+            }
+        });
+
+        document.getElementById('update-cust-btn').addEventListener('click', async () => {
+            if (!selectedCustomerData) {
+                alert("Please select a customer from the list to update.");
+                return;
+            }
+
+            const inputs = document.querySelectorAll('.new-customer-grid .input-field');
+            const name = inputs[0].value.trim();
+            const username = inputs[1].value.trim();
+            const phone = inputs[2].value.trim();
+
+            if (!name || !phone) {
+                alert("Name and Phone cannot be empty.");
+                return;
+            }
+
+            const updatedCustomer = {
+                id: selectedCustomerData.id,
+                name,
+                username,
+                phone
+            };
+
+            try {
+                const response = await fetch(BASE_URL + `/customers/${selectedCustomerData.id}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(updatedCustomer)
+                });
+
+                if (response.ok) {
+                    // Update local array
+                    const index = allCustomers.findIndex(c => c.id === selectedCustomerData.id);
+                    if (index !== -1) {
+                        allCustomers[index] = updatedCustomer;
+                    }
+                    renderCustomerList(allCustomers);
+                    selectCustomer(updatedCustomer);
+                    alert("Customer updated successfully!");
+                } else {
+                    alert("Failed to update customer.");
+                }
+            } catch (error) {
+                console.error("Error updating customer:", error);
+            }
+        });
+        function renderMenuGrid() {
+            const menuGrid = document.getElementById('menu-grid');
+            menuGrid.innerHTML = ''; 
+
+            allMeals.forEach(meal => {
+                if (meal.category && meal.category.toLowerCase() === 'catering') return; 
+
+                const card = document.createElement('div');
+                card.className = 'meal-card';
+                const imageSrc = meal.imagePath ? `assets/${meal.imagePath}` : 'assets/placeholder.png';
+
+                card.innerHTML = `
+                    <img src="${imageSrc}" class="meal-img" onerror="this.src='assets/placeholder.png'">
+                    <p class="meal-name">${meal.name}</p>
+                    <p class="meal-price">EGP ${meal.price.toFixed(2)}</p>
+                    <button class="btn-orange" onclick="handleMealClick(${meal.id})">Add to Order</button>
+                `;
+                menuGrid.appendChild(card);
+            });
+        }
+
+        function handleMealClick(mealId) {
+            const meal = allMeals.find(m => m.id === mealId);
+            if (!meal) return;
+
+            if (meal.availableSides && meal.availableSides.trim() !== '') {
+                activeMealForSide = meal;
+                showSideSelectionModal(meal);
+            } else {
+                addItemToCart(meal, "");
+            }
+        }
+
+        function showSideSelectionModal(meal) {
+            const combo = document.getElementById('side-combo');
+            combo.innerHTML = '';
+            const sides = meal.availableSides.split(',');
+            sides.forEach(s => {
+                const opt = document.createElement('option');
+                opt.value = s.trim();
+                opt.innerText = s.trim();
+                combo.appendChild(opt);
+            });
+            const noOpt = document.createElement('option');
+            noOpt.value = "";
+            noOpt.innerText = "No Side";
+            combo.appendChild(noOpt);
+
+            document.getElementById('side-modal-title').innerText = `Choose a side for ${meal.name}:`;
+            document.getElementById('side-modal').style.display = 'flex';
+        }
+
+        function closeSideModal() {
+            document.getElementById('side-modal').style.display = 'none';
+            activeMealForSide = null;
+        }
+
+        function confirmSideSelection() {
+            const chosenSide = document.getElementById('side-combo').value;
+            if (activeMealForSide) {
+                addItemToCart(activeMealForSide, chosenSide);
+            }
+            closeSideModal();
+        }
+
+        function addItemToCart(meal, chosenSide) {
+            const sideToSave = chosenSide || "";
+            const existingItem = cart.find(item => item.meal.id === meal.id && item.chosenSide === sideToSave);
+            if (existingItem) {
+                existingItem.qty++;
+            } else {
+                cart.push({ meal: meal, qty: 1, chosenSide: sideToSave });
+            }
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const cartList = document.getElementById('cart-list');
+            cartList.innerHTML = '';
+            let subtotal = 0;
+
+            cart.forEach((item, index) => {
+                const itemTotal = item.meal.price * item.qty;
+                subtotal += itemTotal;
+
+                const row = document.createElement('div');
+                row.style.display = 'flex';
+                row.style.justifyContent = 'space-between';
+                row.style.alignItems = 'center';
+                row.style.padding = '8px 5px';
+                row.style.borderBottom = '1px solid #eee';
+
+                const sideDisplay = item.chosenSide ? ` [${item.chosenSide}]` : "";
+                row.innerHTML = `
+                    <span style="flex-grow: 1; font-weight: bold; font-size: 14px;">${item.meal.name}${sideDisplay}</span>
+                    <div style="display: flex; align-items: center;">
+                        <button onclick="changeQty(${index}, -1)" style="background:#CC5500; color:white; border:none; padding:4px 10px; border-radius:4px; cursor:pointer; font-weight: bold;">-</button>
+                        <input type="text" value="${item.qty}" readonly style="width:30px; text-align:center; margin:0 5px; border:1px solid #ccc; padding: 4px;">
+                        <button onclick="changeQty(${index}, 1)" style="background:#829B47; color:white; border:none; padding:4px 10px; border-radius:4px; cursor:pointer; font-weight: bold;">+</button>
+                    </div>
+                    <span style="width: 75px; text-align: right; font-size: 14px;">${itemTotal.toFixed(2)}</span>
+                `;
+                cartList.appendChild(row);
+            });
+
+            calculateTotal(subtotal);
+        }
+
+        function changeQty(index, delta) {
+            cart[index].qty += delta;
+            if (cart[index].qty <= 0) {
+                cart.splice(index, 1);
+            }
+            updateCartUI();
+        }
+
+        function calculateTotal(subtotal) {
+            const discountInput = document.getElementById('discount-input');
+            let discount = parseFloat(discountInput.value) || 0;
+
+            if (discount < 0) discount = 0;
+            if (discount > 100) discount = 100;
+
+            const discountAmount = subtotal * (discount / 100);
+            let finalTotal = subtotal - discountAmount;
+            if (finalTotal < 0) finalTotal = 0;
+
+            const totalLabel = document.querySelector('.total-label');
+            if (discountAmount > 0) {
+                totalLabel.innerText = `Total: ${finalTotal.toFixed(2)} EGP (-${discountAmount.toFixed(2)})`;
+            } else {
+                totalLabel.innerText = `Total: ${finalTotal.toFixed(2)} EGP`;
+            }
+        }
+
+        document.getElementById('discount-input').addEventListener('input', updateCartUI);
+
+        function openCateringModal() {
+            document.getElementById('catering-modal').style.display = 'flex';
+            document.getElementById('cat-name').value = '';
+            document.getElementById('cat-price').value = '';
+            document.getElementById('cat-profit').value = '0';
+            document.getElementById('cat-amount').value = '';
+            document.getElementById('catering-template').value = "";
+            recipeIngredients = [];
+            resetRecipeForm();
+            renderRecipeTable();
+        }
+
+        function closeCateringModal() {
+            document.getElementById('catering-modal').style.display = 'none';
+        }
+
+        function populateCateringDropdowns() {
+            const templateCombo = document.getElementById('catering-template');
+            templateCombo.innerHTML = '<option value="">Select a base meal to edit...</option>';
+            allMeals.forEach(m => {
+                if (!m.category || m.category.toLowerCase() !== 'catering') {
+                    const opt = document.createElement('option');
+                    opt.value = m.id;
+                    opt.innerText = `${m.name} (${m.price} EGP)`;
+                    templateCombo.appendChild(opt);
+                }
+            });
+
+            const stockCombo = document.getElementById('cat-stock-combo');
+            stockCombo.innerHTML = '<option value="">Select Ingredient...</option>';
+            allStockItems.forEach(s => {
+                const opt = document.createElement('option');
+                opt.value = s.id;
+                opt.innerText = `${s.name} (${s.unit})`;
+                stockCombo.appendChild(opt);
+            });
+        }
+
+        function loadCateringTemplate() {
+            const selectedId = document.getElementById('catering-template').value;
+            if (!selectedId) return;
+            const templateMeal = allMeals.find(m => m.id == selectedId);
+            if (templateMeal) {
+                document.getElementById('cat-name').value = templateMeal.name + " (Catering)";
+                document.getElementById('cat-price').value = templateMeal.price;
+                document.getElementById('cat-profit').value = templateMeal.profitPercentage || 0;
+            }
+        }
+
+        function updateUnitSelection() {
+            const stockId = document.getElementById('cat-stock-combo').value;
+            const unitCombo = document.getElementById('cat-unit-combo');
+            unitCombo.innerHTML = '';
+            if (!stockId) {
+                unitCombo.disabled = true;
+                return;
+            }
+            const stockItem = allStockItems.find(s => s.id == stockId);
+            if (!stockItem) return;
+
+            const u = stockItem.unit.toLowerCase();
+            if (['kg', 'g', 'kilo', 'gram', 'grams'].includes(u)) {
+                unitCombo.innerHTML = '<option value="kg">kg</option><option value="g">g</option>';
+                unitCombo.value = 'kg';
+                unitCombo.disabled = false;
+            } else if (['l', 'ml', 'liter', 'liters', 'milliliters'].includes(u)) {
+                unitCombo.innerHTML = '<option value="L">L</option><option value="ml">ml</option>';
+                unitCombo.value = u.includes('ml') ? 'ml' : 'L';
+                unitCombo.disabled = false;
+            } else {
+                unitCombo.innerHTML = `<option value="${stockItem.unit}">${stockItem.unit}</option>`;
+                unitCombo.disabled = true;
+            }
+        }
+
+        function addIngredientToRecipe() {
+            const stockId = document.getElementById('cat-stock-combo').value;
+            const amountVal = parseFloat(document.getElementById('cat-amount').value);
+            const selectedUnit = document.getElementById('cat-unit-combo').value;
+
+            if (!stockId || isNaN(amountVal) || amountVal <= 0) {
+                alert("Please select a valid ingredient and enter a positive amount.");
+                return;
+            }
+
+            const stockItem = allStockItems.find(s => s.id == stockId);
+            const baseUnit = stockItem.unit;
+
+            let convertedAmount = amountVal;
+            const sel = selectedUnit.toLowerCase();
+            const base = baseUnit.toLowerCase();
+            if (sel === 'g' && (base === 'kg' || base === 'kilo' || base === 'kilograms')) {
+                convertedAmount = amountVal / 1000.0;
+            } else if ((sel === 'kg' || sel === 'kilo') && (base === 'g' || base === 'gram' || base === 'grams')) {
+                convertedAmount = amountVal * 1000.0;
+            } else if (sel === 'ml' && (base === 'l' || base === 'liter' || base === 'liters')) {
+                convertedAmount = amountVal / 1000.0;
+            } else if (sel === 'l' && (base === 'ml' || base === 'milliliters')) {
+                convertedAmount = amountVal * 1000.0;
+            }
+
+            const existingIndex = recipeIngredients.findIndex(i => i.id == stockId);
+            if (existingIndex !== -1) {
+                alert("Ingredient already added. Please select it from the table and use 'Update Selected'.");
+                return;
+            }
+
+            recipeIngredients.push({
+                id: parseInt(stockId),
+                name: stockItem.name,
+                amount: convertedAmount,
+                unit: baseUnit
+            });
+
+            resetRecipeForm();
+            renderRecipeTable();
+        }
+
+        function updateIngredientInRecipe() {
+            if (selectedRecipeIndex === -1 || !recipeIngredients[selectedRecipeIndex]) {
+                alert("Please select an ingredient from the recipe table to update.");
+                return;
+            }
+
+            const stockId = document.getElementById('cat-stock-combo').value;
+            const amountVal = parseFloat(document.getElementById('cat-amount').value);
+            const selectedUnit = document.getElementById('cat-unit-combo').value;
+
+            if (!stockId || isNaN(amountVal) || amountVal <= 0) {
+                alert("Please select a valid ingredient and enter a positive amount.");
+                return;
+            }
+
+            const stockItem = allStockItems.find(s => s.id == stockId);
+            const baseUnit = stockItem.unit;
+
+            let convertedAmount = amountVal;
+            const sel = selectedUnit.toLowerCase();
+            const base = baseUnit.toLowerCase();
+            if (sel === 'g' && (base === 'kg' || base === 'kilo' || base === 'kilograms')) {
+                convertedAmount = amountVal / 1000.0;
+            } else if ((sel === 'kg' || sel === 'kilo') && (base === 'g' || base === 'gram' || base === 'grams')) {
+                convertedAmount = amountVal * 1000.0;
+            } else if (sel === 'ml' && (base === 'l' || base === 'liter' || base === 'liters')) {
+                convertedAmount = amountVal / 1000.0;
+            } else if (sel === 'l' && (base === 'ml' || base === 'milliliters')) {
+                convertedAmount = amountVal * 1000.0;
+            }
+
+            recipeIngredients[selectedRecipeIndex] = {
+                id: parseInt(stockId),
+                name: stockItem.name,
+                amount: convertedAmount,
+                unit: baseUnit
+            };
+
+            resetRecipeForm();
+            renderRecipeTable();
+        }
+
+        function removeSelectedRecipeIngredient() {
+            if (selectedRecipeIndex === -1) {
+                alert("Please select an ingredient from the table to remove.");
+                return;
+            }
+            recipeIngredients.splice(selectedRecipeIndex, 1);
+            resetRecipeForm();
+            renderRecipeTable();
+        }
+
+        function selectRecipeRow(index, rowElement) {
+            document.querySelectorAll('#recipe-tbody tr').forEach(tr => tr.style.background = 'transparent');
+            rowElement.style.background = '#e2d8c3';
+            selectedRecipeIndex = index;
+
+            const ing = recipeIngredients[index];
+            document.getElementById('cat-stock-combo').value = ing.id;
+            updateUnitSelection();
+            document.getElementById('cat-amount').value = ing.amount;
+        }
+
+        function resetRecipeForm() {
+            selectedRecipeIndex = -1;
+            document.getElementById('cat-amount').value = '';
+            document.getElementById('cat-stock-combo').value = '';
+            document.getElementById('cat-unit-combo').disabled = true;
+        }
+
+        function renderRecipeTable() {
+            const tbody = document.getElementById('recipe-tbody');
+            tbody.innerHTML = '';
+            recipeIngredients.forEach((ing, index) => {
+                const tr = document.createElement('tr');
+                tr.style.borderBottom = '1px solid #eee';
+                tr.style.cursor = 'pointer';
+                tr.onclick = () => selectRecipeRow(index, tr);
+                tr.innerHTML = `
+                    <td style="padding: 6px;">${ing.name}</td>
+                    <td style="padding: 6px;">${ing.amount}</td>
+                    <td style="padding: 6px;">${ing.unit}</td>
+                    <td style="padding: 6px; text-align: right;">
+                        <button onclick="event.stopPropagation(); removeRecipeIngredientDirect(${index})" style="background:#e74c3c; color:white; border:none; padding:2px 8px; border-radius:4px; cursor:pointer;">X</button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function removeRecipeIngredientDirect(index) {
+            recipeIngredients.splice(index, 1);
+            resetRecipeForm();
+            renderRecipeTable();
+        }
+
+        function saveCustomCateringMeal() {
+            const name = document.getElementById('cat-name').value.trim();
+            const price = parseFloat(document.getElementById('cat-price').value) || 0;
+            const profitPercentage = parseFloat(document.getElementById('cat-profit').value) || 0;
+
+            if (!name || price <= 0) {
+                alert("Please provide a valid meal name and unit price.");
+                return;
+            }
+            if (recipeIngredients.length === 0) {
+                alert("Please add at least one ingredient to the recipe.");
+                return;
+            }
+
+            const customMeal = {
+                id: -Math.floor(Math.random() * 1000000), // Random small negative integer to avoid Java int overflow
+                name: name,
+                price: price,
+                category: 'Catering',
+                profitPercentage: profitPercentage,
+                customIngredients: recipeIngredients
+            };
+
+            cart.push({ meal: customMeal, qty: 1, chosenSide: "" });
+            updateCartUI();
+            closeCateringModal();
+        }
+
+        document.querySelector('.btn-submit').addEventListener('click', async () => {
+            if (!selectedCustomerData) {
+                alert("Please select a customer before placing an order.");
+                return;
+            }
+            if (cart.length === 0) {
+                alert("Add at least one meal to place an order.");
+                return;
+            }
+
+            let subtotal = 0;
+            let totalProfit = 0;
+            const cartItemsPayload = [];
+
+            cart.forEach(item => {
+                const itemTotal = item.meal.price * item.qty;
+                subtotal += itemTotal;
+                totalProfit += itemTotal * ((item.meal.profitPercentage || 0) / 100.0);
+
+                cartItemsPayload.push({
+                    mealId: item.meal.id,
+                    quantity: item.qty,
+                    chosenSide: item.chosenSide || "",
+                    customMeal: item.meal.id < 0 ? item.meal : null
+                });
+            });
+
+            const discountInput = document.getElementById('discount-input');
+            let discountPercentage = parseFloat(discountInput.value) || 0;
+            if (discountPercentage < 0) discountPercentage = 0;
+            if (discountPercentage > 100) discountPercentage = 100;
+
+            const discountAmount = subtotal * (discountPercentage / 100);
+            let finalTotal = subtotal - discountAmount;
+            if (finalTotal < 0) finalTotal = 0;
+            totalProfit -= discountAmount;
+
+            let finalDeliveryMethod = deliveryType.value;
+            if (finalDeliveryMethod === 'Delivery') {
+                finalDeliveryMethod = `Delivery (${deliveryProvider.value})`;
+            }
+
+            const finalPaymentMethod = document.getElementById('payment-method').value;
+
+            const orderPayload = {
+                customerId: selectedCustomerData.id,
+                cartItems: cartItemsPayload,
+                finalTotal: finalTotal,
+                discountAmount: discountAmount,
+                totalProfit: totalProfit,
+                deliveryMethod: finalDeliveryMethod,
+                paymentMethod: finalPaymentMethod
+            };
+
+            try {
+                const response = await fetch(BASE_URL + '/orders', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(orderPayload)
+                });
+
+                if (response.ok) {
+                    alert(`Order placed successfully for ${selectedCustomerData.name}!`);
+                    cart = [];
+                    updateCartUI();
+                    discountInput.value = "0";
+                    deliveryType.value = "Dine in";
+                    deliveryProvider.style.display = "none";
+                    document.getElementById('payment-method').value = "Cash";
+                } else {
+                    alert("Failed to place order. Check the Codespace terminal for database errors.");
+                }
+            } catch (error) {
+                console.error("Error submitting order:", error);
+                alert("Connection failed.");
+            }
+        });
+
+        window.onload = loadInitialData;
+    </script>
+</body>
+</html>

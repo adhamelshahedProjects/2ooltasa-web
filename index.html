@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2oolTasa Management System</title>
+    <style>
+        /* 1. BACKGROUND SETUP */
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            /* Tries to load the image, falls back to your off-white color if missing */
+            background: url('assets/background.jpeg') center center no-repeat;
+            background-size: cover;
+            background-color: #F4F1EA;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .main-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px 20px 20px;
+            flex-grow: 1; /* Pushes the footer to the bottom */
+        }
+
+        /* 2. LOGO & HEADER */
+        .header-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .logo {
+            height: 80px;
+            width: auto;
+        }
+
+        .title {
+            font-size: 36px;
+            font-weight: bold;
+            color: #CC5500;
+            margin: 0;
+        }
+
+        .subtitle {
+            font-size: 16px;
+            color: #333333;
+            margin: 0;
+        }
+
+        /* 3. MAIN BUTTONS */
+        .button-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            padding: 20px 0 40px 0;
+        }
+
+        .menu-btn {
+            width: 450px;
+            height: 70px;
+            background-color: #CC5500;
+            color: white;
+            font-size: 26px;
+            font-weight: bold;
+            border-radius: 40px;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.4);
+            display: flex;
+            align-items: center;
+            padding-left: 40px;
+            box-sizing: border-box;
+            text-decoration: none;
+            transition: background-color 0.2s;
+        }
+
+        .menu-btn:hover {
+            background-color: #A84600;
+        }
+
+        .btn-icon {
+            height: 55px;
+            width: 55px;
+            object-fit: contain;
+            margin-right: 35px; /* Matches your setGraphicTextGap */
+        }
+
+        /* 4. FOOTER */
+        .footer {
+            margin-top: auto;
+            font-size: 12px;
+            color: #000000;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="main-container">
+        <!-- HEADER -->
+        <div class="header-box">
+            <img src="assets/logo.png" alt="2oolTasa Logo" class="logo" onerror="this.style.display='none'">
+            <h1 class="title">2oolTasa Management System</h1>
+            <p class="subtitle">WELCOME</p>
+        </div>
+
+        <!-- BUTTONS -->
+        <div class="button-box">
+            <button class="menu-btn" onclick="window.location.href='order.html'">
+                <img src="assets/icon_order.png" class="btn-icon" onerror="this.style.display='none'">
+                <span>Take New Order</span>
+            </button>
+
+            <button class="menu-btn" onclick="window.location.href='stock.html'">
+                <img src="assets/icon_stock.png" class="btn-icon" onerror="this.style.display='none'">
+                <span>Manage Stock</span>
+            </button>
+
+            <button class="menu-btn" onclick="window.location.href='menu.html'">
+                <img src="assets/icon_menu.png" class="btn-icon" onerror="this.style.display='none'">
+                <span>Manage Menu</span>
+            </button>
+
+            <button class="menu-btn" onclick="window.location.href='history.html'">
+                <img src="assets/icon_history.png" class="btn-icon" onerror="this.style.display='none'">
+                <span>Ordering History</span>
+            </button>
+        </div>
+
+        <!-- FOOTER -->
+        <div class="footer">
+            © 2oolTasa Management System | Ver. 2.1
+        </div>
+    </div>
+
+</body>
+</html>
